@@ -6,11 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clean and Affordable Energy</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/110486886?s=280&v=4">
     <link href="https://avatars.githubusercontent.com/u/110486886?s=280&v=4">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <style>
+    .error-message {
+        color: red;
+        font-weight: bold;
+        display: none; /* Hide the error message initially */
+    }
+    </style>
     
     <div id="webbar">
         <nav id="navbar">
@@ -40,7 +48,7 @@
             
             <div class="question">
                 <h2>1. What is the primary source of renewable energy?</h2>
-                <div class="options">
+                <div class="options" >
                     <label><input type="radio" name="q1" value="a"> Coal</label>
                     <label><input type="radio" name="q1" value="b"> Natural Gas</label>
                     <label><input type="radio" name="q1" value="c"> Solar</label>
@@ -202,6 +210,7 @@
                 </div>
             </div>
             
+            <div id="error-message" class="error-message">Please answer all questions before submitting.</div>
             <br>
             <div id="control-btns">
             <button  type="submit" class="submit-btn"><a style="text-decoration: none; color: white;" href="solution.html">Submit Quiz</a></button> 
@@ -216,5 +225,30 @@
 
     
     <script src="script.js"></script>
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            var isValid = true;
+            var questions = document.querySelectorAll('.question');
+    
+            questions.forEach(function(question) {
+                var questionAnswered = question.querySelector('input[type="radio"]:checked');
+                if (!questionAnswered) {
+                    isValid = false;
+                }
+            });
+    
+            if (!isValid) {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('error-message').style.display = 'block'; // Show error message
+            } else {
+                document.getElementById('error-message').style.display = 'none'; // Hide error message
+            }
+        });
+    
+        function resetForm() {
+            document.getElementById('quizForm').reset();
+            document.getElementById('error-message').style.display = 'none'; // Hide error message on reset
+        }
+    </script>
 </body>
 </html>
